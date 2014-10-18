@@ -1,0 +1,19 @@
+<ion-view title="Talks" class="conference">
+    <ion-content class="content-light">
+        <div class="bar bar-header item-input-inset">
+            <label class="item-input-wrapper">
+                <i class="icon ion-ios7-search placeholder-icon"></i>
+                <input type="search" placeholder="Search" ng-model="searchTalk">
+            </label>
+            <button class="button button-clear" ng-click="searchTalk=''">
+                Cancel
+            </button>
+        </div>
+        <ion-list>
+            <ion-item ng-repeat="talk in gr8conf.talks | filter:{title: searchTalk}"
+                      class="item-text-wrap">
+                <span style="font-weight: 500">{{talk.title}}</span>
+            </ion-item>
+        </ion-list>
+    </ion-content>
+</ion-view>

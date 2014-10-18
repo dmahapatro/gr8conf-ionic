@@ -1,0 +1,15 @@
+<ion-view title="Talk">
+  <ion-content has-header="true" padding="true">
+      <div class="card">
+          <div class="item item-divider item-calm">
+              {{ selectedTalk.title }}
+          </div>
+          <div class="item item-text-wrap">
+              <span ng-bind-html="selectedTalk.summary"></span>
+          </div>
+          <div class="item item-divider">
+              <span>{{ selectedTalk.speakers | collateName }}</span>
+          </div>
+      </div>
+  </ion-content>
+</ion-view>

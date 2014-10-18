@@ -1,0 +1,41 @@
+<ion-view title="Agenda" class="conference">
+    <ion-content class="content-light">
+        <div class="row">
+            <div class="button-bar"
+                 ng-repeat="conf in gr8conf.agenda">
+                <button class="button button-block button-small button-light"
+                        ng-class="{'button-balanced' : conf.active }"
+                        ng-click="tracksForTheDay(conf)">
+                    {{ conf.day | date:'EEE, dd MMM' }}
+                </button>
+            </div>
+        </div>
+        <ion-list>
+            <div ng-repeat="(start, items) in gr8conf.agendaByDay | groupBy: 'start'">
+                <div class="card">
+                    <div class="item item-divider agenda-header">
+                        {{ start | formatted }} - {{ items[0].end | formatted }}
+                    </div>
+                    <ion-item ng-repeat-start="agendaItem in items"
+                              class="item item-text-wrap"
+                              ng-if="agendaItem.talk"
+                              href="#/tab/agenda/{{ agendaItem.talk.id }}">
+                            <span ng-class="agendaItem | specialIcons"></span>
+                            {{ agendaItem.talk.title || agendaItem.name }}
+                            <div ng-if="agendaItem.speakers" style="font-size: small">
+                                <span class="ion-ios7-person" style="padding-right: 10px"> {{ agendaItem.speakers[0].name }}</span>
+                                <span class="ion-compass"> {{ agendaItem.roomName }}</span>
+                                <span ng-if="agendaItem.roomNum"> / {{ agendaItem.roomNum }}</span>
+                            </div>
+                    </ion-item>
+                    <ion-item ng-repeat-end
+                              class="item item-text-wrap"
+                              ng-if="!agendaItem.talk">
+                        <span ng-class="agendaItem | specialIcons"></span>
+                        {{  agendaItem.name }}
+                    </ion-item>
+                </div>
+            </div>
+        </ion-list>
+    </ion-content>
+</ion-view>

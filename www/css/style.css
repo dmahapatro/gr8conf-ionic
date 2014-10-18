@@ -1,0 +1,40 @@
+/* Empty. Add your own CSS if you like */
+
+* {
+    font-family: 'Open Sans', sans-serif;
+}
+
+.wide-as-needed {
+    overflow: scroll;
+    white-space: nowrap;
+}
+
+.conference {
+    background-image: url("../img/gr8conf-background.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.gr8conf-eu {
+    background-image: url("../img/gr8conf-eu-icon.png");
+}
+
+.gr8conf-us {
+    background-image: url("../img/gr8conf-us-icon.png");
+}
+
+.agenda-header {
+    background-color: #b41f1f;
+    color: whitesmoke;
+}
+
+.conf-talks-card {
+    min-height: 60px;
+    background-color: lightsalmon;
+    color: darkred;
+}
+
+.content-light {
+    opacity: 0.7;
+}
