@@ -1,19 +1,26 @@
 // Controllers
 (function(){
-    var TalksCtrl = function ($scope, $rootScope, $stateParams, Talks) {
-        $scope.gr8conf = {talks : []};
+    var TalksCtrl = function ($scope, $rootScope, $stateParams, $state, Talks) {
+        $scope.gr8conf = {talks : [], searchTalk: '', talksTitle: 'Talks'};
+        $scope.gr8conf.talksTitle = $scope.confId === 1 ? 'Europe' : 'USA';
+        
         if ( $stateParams && $stateParams.confType ) {
             $rootScope.confId = $stateParams.confType == 'eu' ? 1 : 2;
+            $scope.gr8conf.talks = Talks;
+            $scope.talksError = false;
+        } else {
+            $scope.talksError = true;
         }
 
-        $scope.gr8conf.talks = Talks;
+        $scope.talkDetails = function(talkId) {
+            $state.go('tab.talk', { talkId: talkId, confId: $scope.confId });
+        }
     };
 
     var AgendaCtrl = function ($scope, Agenda) {
-        $scope.gr8conf = { agenda: [], agendaByTimeForDay : [], agendaByDay: [] };
+        $scope.gr8conf = { agenda: [], agendaByTimeForDay : [], agendaByDay: [], agendaTitle: 'Agenda' };
+        $scope.gr8conf.agendaTitle = $scope.confId === 1 ? 'Europe' : 'USA';
 
-        // Weird way to set agenda for the day
-        // TODO: Refine this logic
         function setAgendaForDay( conf ) {
             if ( $scope.confId === 1 ) {
                 if ( $scope.gr8conf.agendaGroupedByTimePerDay && $scope.gr8conf.agendaGroupedByTimePerDay.length > 2 ) {
@@ -108,14 +115,16 @@
     };
 
     var SpeakersCtrl = function ($scope, Speakers) {
-        $scope.gr8conf = {speakers : []};
+        $scope.gr8conf = {speakers : [], speakersTitle: '' };
+        $scope.gr8conf.speakersTitle = $scope.confId === 1 ? 'Europe' : 'USA';
+
         Speakers.query({confId: $scope.confId}).$promise.then(function(speakers){
             $scope.gr8conf.speakers = speakers;
         });
     };
 
     // DI for each controller using $inject
-    TalksCtrl.$inject = ['$scope', '$rootScope', '$stateParams', 'Talks'];
+    TalksCtrl.$inject = ['$scope', '$rootScope', '$stateParams', '$state', 'Talks'];
     AgendaCtrl.$inject = ['$scope', 'Agenda'];
     AgendaDetailCtrl.$inject = ['$scope', '$stateParams', 'Talks'];
     SpeakersCtrl.$inject = ['$scope', 'Speakers'];

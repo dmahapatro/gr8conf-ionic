@@ -1,17 +1,24 @@
 <ion-view title="Talks" class="conference">
     <ion-content class="content-light">
-        <div class="bar bar-header item-input-inset">
-            <label class="item-input-wrapper">
-                <i class="icon ion-ios7-search placeholder-icon"></i>
-                <input type="search" placeholder="Search" ng-model="searchTalk">
-            </label>
-            <button class="button button-clear" ng-click="searchTalk=''">
-                Cancel
-            </button>
+        <div ng-if="talksError">
+            <ion-item class="item item-text-wrap">
+                <strong>Select Country to see session details</strong>
+            </ion-item>
+        </div>
+        <div ng-if="!talksError">
+            <div class="bar bar-header item-input-inset">
+                <label class="item-input-wrapper">
+                    <i class="icon ion-ios7-search placeholder-icon"></i>
+                    <input type="search" placeholder="Search" ng-model="gr8conf.searchTalk">
+                </label>
+                <button class="button button-clear" ng-click="gr8conf.searchTalk=''">
+                    Cancel
+                </button>
+            </div>
         </div>
         <ion-list>
-            <ion-item ng-repeat="talk in gr8conf.talks | filter:{title: searchTalk}"
-                      class="item-text-wrap">
+            <ion-item ng-repeat="talk in gr8conf.talks | filter:{title: gr8conf.searchTalk}"
+                      class="item-text-wrap" ng-click="talkDetails(talk.id)">
                 <span style="font-weight: 500">{{talk.title}}</span>
             </ion-item>
         </ion-list>

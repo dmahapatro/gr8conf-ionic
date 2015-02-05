@@ -40,6 +40,15 @@
                     }
                 }
             })
+            .state('tab.talk', {
+                url: '/talk/:confId/:talkId',
+                views: {
+                    'tab-talks': {
+                        templateUrl: 'templates/agenda-detail.html',
+                        controller: 'AgendaDetailCtrl'
+                    }
+                }
+            })
             .state('tab.agenda', {
                 url: '/agenda',
                 views: {
@@ -73,7 +82,7 @@
     }
 
     // bootstrap function for application module
-    function appRun($ionicPlatform, Talks, Agenda, Speakers) {
+    function appRun($ionicPlatform, $cordovaSplashscreen, Talks, Agenda, Speakers) {
         $ionicPlatform.ready(function () {
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
             // for form inputs)
@@ -84,6 +93,8 @@
                 // org.apache.cordova.statusbar required
                 StatusBar.styleDefault();
             }
+
+            $cordovaSplashscreen.hide();
         });
 
         // Resolve all resources after DI is complete.
@@ -102,6 +113,7 @@
     // Angular module
     angular.module('gr8conf', [
             'ionic',
+            'ngCordova',
             'angular.filter',
             'gr8conf.controllers',
             'gr8conf.services',
