@@ -10,18 +10,18 @@
 }
 
 .conference {
-    background-image: url("../img/gr8conf-background.png");
+    background-image: url("../img/gr8conf-2015-background.png");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
 }
 
 .gr8conf-eu {
-    background-image: url("../img/gr8conf-eu-flat-icon.png");
+    background-image: url("../img/gr8conf-eu-2015.png");
 }
 
 .gr8conf-us {
-    background-image: url("../img/gr8conf-us-flat-icon.png");
+    background-image: url("../img/gr8conf-us-2015.png");
 }
 
 .agenda-header {

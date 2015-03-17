@@ -33,7 +33,7 @@
                         resolve: {
                             talks: "Talks",
                             Talks: function(talks, $stateParams) {
-                                var confId = $stateParams.confType == 'eu' ? 1 : 2;
+                                var confId = $stateParams.confType == 'eu' ? 3 : 4;
                                 return talks.query({confId: confId}).$promise;
                             }
                         }
@@ -99,12 +99,12 @@
 
         // Resolve all resources after DI is complete.
         function resolveStrategy() {
-            Talks.query({confId: 1});
-            Talks.query({confId: 2});
-            Agenda.query({confId: 1});
-            Agenda.query({confId: 2});
-            Speakers.query({confId: 1});
-            Speakers.query({confId: 2});
+            Talks.query({confId: 3});
+            Talks.query({confId: 4});
+            Agenda.query({confId: 3});
+            Agenda.query({confId: 4});
+            Speakers.query({confId: 3});
+            Speakers.query({confId: 4});
         }
 
         resolveStrategy();

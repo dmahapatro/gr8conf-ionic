@@ -1,0 +1,11 @@
+Gr8Conf iOS App
+===============
+
+http://gr8conf.eu[Gr8Conf] iOS App build with http://ionicframework.org[ionic].
+
+
+== TODO
+
+ - Page loading indicator when icon is touched.
+ - Upgrade ionic and AngularJS.
+ - Add unit/functional tests.

@@ -2,10 +2,10 @@
 (function(){
     var TalksCtrl = function ($scope, $rootScope, $stateParams, $state, Talks) {
         $scope.gr8conf = {talks : [], searchTalk: '', talksTitle: 'Talks'};
-        $scope.gr8conf.talksTitle = $scope.confId === 1 ? 'Europe' : 'USA';
+        $scope.gr8conf.talksTitle = $scope.confId === 3 ? 'Europe' : 'USA';
         
         if ( $stateParams && $stateParams.confType ) {
-            $rootScope.confId = $stateParams.confType == 'eu' ? 1 : 2;
+            $rootScope.confId = $stateParams.confType == 'eu' ? 3 : 4;
             $scope.gr8conf.talks = Talks;
             $scope.talksError = false;
         } else {
@@ -22,14 +22,14 @@
         $scope.gr8conf.agendaTitle = $scope.confId === 1 ? 'Europe' : 'USA';
 
         function setAgendaForDay( conf ) {
-            if ( $scope.confId === 1 ) {
+            if ( $scope.confId === 3 ) {
                 if ( $scope.gr8conf.agendaGroupedByTimePerDay && $scope.gr8conf.agendaGroupedByTimePerDay.length > 2 ) {
-                    if ( conf.day == "2014-06-02" ) {
+                    if ( conf.day == "2015-06-02" ) {
                         $scope.gr8conf.agendaByDay = $scope.gr8conf.agendaGroupedByTimePerDay[0];
                         $scope.gr8conf.agenda[0].active = true;
                         $scope.gr8conf.agenda[1].active = false;
                         $scope.gr8conf.agenda[2].active = false;
-                    } else if ( conf.day == "2014-06-03" ) {
+                    } else if ( conf.day == "2015-06-03" ) {
                         $scope.gr8conf.agendaByDay = $scope.gr8conf.agendaGroupedByTimePerDay[1];
                         $scope.gr8conf.agenda[1].active = true;
                         $scope.gr8conf.agenda[0].active = false;
@@ -41,8 +41,8 @@
                         $scope.gr8conf.agenda[1].active = false;
                     }
                 }
-            } else if ( $scope.confId === 2 ) {
-                if ( conf.day == "2014-07-28" ) {
+            } else if ( $scope.confId === 4 ) {
+                if ( conf.day == "2015-07-28" ) {
                     $scope.gr8conf.agendaByDay = $scope.gr8conf.agendaGroupedByTimePerDay[0];
                     $scope.gr8conf.agenda[0].active = true;
                     $scope.gr8conf.agenda[1].active = false
@@ -116,7 +116,7 @@
 
     var SpeakersCtrl = function ($scope, Speakers) {
         $scope.gr8conf = {speakers : [], speakersTitle: '' };
-        $scope.gr8conf.speakersTitle = $scope.confId === 1 ? 'Europe' : 'USA';
+        $scope.gr8conf.speakersTitle = $scope.confId === 3 ? 'Europe' : 'USA';
 
         Speakers.query({confId: $scope.confId}).$promise.then(function(speakers){
             $scope.gr8conf.speakers = speakers;
