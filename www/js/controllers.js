@@ -19,7 +19,7 @@
 
     var AgendaCtrl = function ($scope, Agenda) {
         $scope.gr8conf = { agenda: [], agendaByTimeForDay : [], agendaByDay: [], agendaTitle: 'Agenda' };
-        $scope.gr8conf.agendaTitle = $scope.confId === 1 ? 'Europe' : 'USA';
+        $scope.gr8conf.agendaTitle = $scope.confId === 3 ? 'Europe' : 'USA';
 
         function setAgendaForDay( conf ) {
             if ( $scope.confId === 3 ) {
@@ -42,14 +42,21 @@
                     }
                 }
             } else if ( $scope.confId === 4 ) {
-                if ( conf.day == "2015-07-28" ) {
+                if ( conf.day == "2015-07-29" ) {
                     $scope.gr8conf.agendaByDay = $scope.gr8conf.agendaGroupedByTimePerDay[0];
                     $scope.gr8conf.agenda[0].active = true;
                     $scope.gr8conf.agenda[1].active = false
-                } else {
+                    $scope.gr8conf.agenda[2].active = false
+                } else if ( conf.day == "2015-07-30" ) {
                     $scope.gr8conf.agendaByDay = $scope.gr8conf.agendaGroupedByTimePerDay[1];
+                    $scope.gr8conf.agenda[2].active = true;
+                    $scope.gr8conf.agenda[0].active = false
+                    $scope.gr8conf.agenda[1].active = false
+                } else {
+                    $scope.gr8conf.agendaByDay = $scope.gr8conf.agendaGroupedByTimePerDay[2];
                     $scope.gr8conf.agenda[1].active = true;
                     $scope.gr8conf.agenda[0].active = false
+                    $scope.gr8conf.agenda[2].active = false
                 }
             }
         }

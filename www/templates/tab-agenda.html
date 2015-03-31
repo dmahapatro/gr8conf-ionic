@@ -2,7 +2,7 @@
     <ion-content class="content-light">
         <div class="row">
             <div class="button-bar"
-                 ng-repeat="conf in gr8conf.agenda">
+                 ng-repeat="conf in gr8conf.agenda | orderBy:'day'">
                 <button class="button button-block button-small button-light"
                         ng-class="{'button-balanced' : conf.active }"
                         ng-click="tracksForTheDay(conf)">
