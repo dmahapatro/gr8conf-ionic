@@ -38,3 +38,11 @@
 .content-light {
     opacity: 0.7;
 }
+
+#speakerDetail p {
+    margin-bottom: 0px;
+}
+
+#otherTalks p {
+    margin-bottom: 0px;
+}

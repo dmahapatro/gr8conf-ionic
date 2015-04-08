@@ -29,14 +29,37 @@
         });
     };
 
+    var SpeakerDetail = function (Speakers) {
+        function getDetail(confId, speakerId) {
+            if(!speakerId) { return '' };
+            var selectedSpeaker = {};
+
+            return Speakers.query({confId: confId}).$promise.then(function(speakers){
+                if(speakers) {
+                    selectedSpeaker = speakers.filter(function(speaker){
+                        return speaker.id == speakerId;
+                    });
+
+                    return selectedSpeaker ? selectedSpeaker[0] : {};
+                }
+            });
+        }
+
+        return {
+            getDetail: getDetail
+        }
+    };
+
     var injections = ['$resource', 'Api'];
 
     Talks.$inject = angular.copy(injections);
     Speakers.$inject = angular.copy(injections);
     Agenda.$inject = angular.copy(injections);
+    SpeakerDetail.$inject = angular.copy(['Speakers']);
 
     angular.module('gr8conf.services', ['ngResource'])
         .factory('Talks', Talks)
         .factory('Speakers', Speakers)
-        .factory('Agenda', Agenda);
+        .factory('Agenda', Agenda)
+        .factory('SpeakerDetail', SpeakerDetail);
 })();

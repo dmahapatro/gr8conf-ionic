@@ -7,8 +7,23 @@
           <div class="item item-text-wrap">
               <span ng-bind-html="selectedTalk.summary"></span>
           </div>
-          <div class="item item-divider">
-              <span>{{ selectedTalk.speakers | collateName }}</span>
+          <div id="speakerDetail" class="item item-divider">
+              <div class="item-avatar" style="padding-left: 53px;min-height: 51px;">
+                  <img ng-src="{{speakerDetails.speakerDetail.image}}">
+                  <p style="margin-top: 4px;margin-bottom: 0px">{{ selectedTalk.speakers | collateName }}</p>
+                  <p style="font-size: smaller;" class="ion-social-twitter">
+                      <span style="color: lightcoral;">{{ speakerDetails.speakerDetail.twitter | withHandle }}</span>
+                  </p>
+
+              </div>
+          </div>
+          <div id="otherTalks" ng-if="speakerDetails.otherTalks"
+               class="item item-divider item-text-wrap">
+              <p>Other Talk(s):</p>
+              <p ng-repeat="otherTalk in speakerDetails.otherTalks"
+                    style="font-size: small;">
+                  - {{ otherTalk.title }}
+              </p>
           </div>
       </div>
   </ion-content>

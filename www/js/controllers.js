@@ -48,12 +48,12 @@
                     $scope.gr8conf.agenda[1].active = false
                     $scope.gr8conf.agenda[2].active = false
                 } else if ( conf.day == "2015-07-30" ) {
-                    $scope.gr8conf.agendaByDay = $scope.gr8conf.agendaGroupedByTimePerDay[1];
+                    $scope.gr8conf.agendaByDay = $scope.gr8conf.agendaGroupedByTimePerDay[2];
                     $scope.gr8conf.agenda[2].active = true;
                     $scope.gr8conf.agenda[0].active = false
                     $scope.gr8conf.agenda[1].active = false
                 } else {
-                    $scope.gr8conf.agendaByDay = $scope.gr8conf.agendaGroupedByTimePerDay[2];
+                    $scope.gr8conf.agendaByDay = $scope.gr8conf.agendaGroupedByTimePerDay[1];
                     $scope.gr8conf.agenda[1].active = true;
                     $scope.gr8conf.agenda[0].active = false
                     $scope.gr8conf.agenda[2].active = false
@@ -108,13 +108,28 @@
         };
     };
 
-    var AgendaDetailCtrl = function ($scope, $stateParams, Talks) {
+    var AgendaDetailCtrl = function ($scope, $stateParams, Talks, SpeakerDetail) {
         $scope.agendaDetail = {talks: []};
+        $scope.speakerDetails = {speakerDetail: {}, otherTalks: []};
+
+        function getOtherTalks(_talks, _talkId) {
+            if(!_talks) { return [] };
+
+            return _talks.filter(function(_a){
+                return _a.id != _talkId;
+            });
+        }
+
         Talks.query({confId: $scope.confId}).$promise.then(function(talks){
             if( talks ) {
                 angular.forEach(talks, function(talk){
                     if ( $stateParams.talkId == talk.id ) {
                         $scope.selectedTalk = talk;
+                        SpeakerDetail.getDetail($scope.confId, talk.speakers[0].id)
+                            .then(function(speakerDetail){
+                                $scope.speakerDetails.speakerDetail = speakerDetail;
+                                $scope.speakerDetails.otherTalks = getOtherTalks(speakerDetail.talks, talk.id);
+                        });
                     }
                 });
             }
@@ -133,7 +148,7 @@
     // DI for each controller using $inject
     TalksCtrl.$inject = ['$scope', '$rootScope', '$stateParams', '$state', 'Talks'];
     AgendaCtrl.$inject = ['$scope', 'Agenda'];
-    AgendaDetailCtrl.$inject = ['$scope', '$stateParams', 'Talks'];
+    AgendaDetailCtrl.$inject = ['$scope', '$stateParams', 'Talks', 'SpeakerDetail'];
     SpeakersCtrl.$inject = ['$scope', 'Speakers'];
 
     // All controllers
