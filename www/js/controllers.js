@@ -17,19 +17,37 @@
         }
     };
 
-    var AgendaCtrl = function ($scope, Agenda) {
+    var AgendaCtrl = function ($scope, Agenda, AgendaService) {
         $scope.gr8conf = { agenda: [], agendaByTimeForDay : [], agendaByDay: [], agendaTitle: 'Agenda' };
         $scope.gr8conf.agendaTitle = $scope.confId === 3 ? 'Europe' : 'USA';
 
-        function setAgendaForDay( conf ) {
+        function setLandingAgendaDay() {
+            var visitedAgenda = AgendaService.getVisitedAgenda();
+
+            if(visitedAgenda && visitedAgenda.day) {
+                return visitedAgenda.day;
+            }
+            var today = moment().format('YYYY-MM-DD');
+
+            if( $scope.gr8conf.agenda.some(function(item){
+                    return item.day == today;
+                })
+            ) {
+                return today;
+            } else {
+                return $scope.gr8conf.agenda[0].day;
+            }
+        }
+
+        function setAgendaForDay( day ) {
             if ( $scope.confId === 3 ) {
                 if ( $scope.gr8conf.agendaGroupedByTimePerDay && $scope.gr8conf.agendaGroupedByTimePerDay.length > 2 ) {
-                    if ( conf.day == "2015-06-02" ) {
+                    if ( day == "2015-06-02" ) {
                         $scope.gr8conf.agendaByDay = $scope.gr8conf.agendaGroupedByTimePerDay[0];
                         $scope.gr8conf.agenda[0].active = true;
                         $scope.gr8conf.agenda[1].active = false;
                         $scope.gr8conf.agenda[2].active = false;
-                    } else if ( conf.day == "2015-06-03" ) {
+                    } else if ( day == "2015-06-03" ) {
                         $scope.gr8conf.agendaByDay = $scope.gr8conf.agendaGroupedByTimePerDay[1];
                         $scope.gr8conf.agenda[1].active = true;
                         $scope.gr8conf.agenda[0].active = false;
@@ -42,21 +60,21 @@
                     }
                 }
             } else if ( $scope.confId === 4 ) {
-                if ( conf.day == "2015-07-29" ) {
+                if ( day == "2015-07-29" ) {
                     $scope.gr8conf.agendaByDay = $scope.gr8conf.agendaGroupedByTimePerDay[0];
                     $scope.gr8conf.agenda[0].active = true;
-                    $scope.gr8conf.agenda[1].active = false
+                    $scope.gr8conf.agenda[1].active = false;
                     $scope.gr8conf.agenda[2].active = false
-                } else if ( conf.day == "2015-07-30" ) {
+                } else if ( day == "2015-07-30" ) {
                     $scope.gr8conf.agendaByDay = $scope.gr8conf.agendaGroupedByTimePerDay[2];
                     $scope.gr8conf.agenda[2].active = true;
-                    $scope.gr8conf.agenda[0].active = false
-                    $scope.gr8conf.agenda[1].active = false
+                    $scope.gr8conf.agenda[0].active = false;
+                    $scope.gr8conf.agenda[1].active = false;
                 } else {
                     $scope.gr8conf.agendaByDay = $scope.gr8conf.agendaGroupedByTimePerDay[1];
                     $scope.gr8conf.agenda[1].active = true;
-                    $scope.gr8conf.agenda[0].active = false
-                    $scope.gr8conf.agenda[2].active = false
+                    $scope.gr8conf.agenda[0].active = false;
+                    $scope.gr8conf.agenda[2].active = false;
                 }
             }
         }
@@ -100,11 +118,12 @@
             $scope.gr8conf.agendaGroupedByTimePerDay = agendaGroupedByTimePerDay;
 
             // Default to day 1
-            setAgendaForDay( $scope.gr8conf.agenda[0] );
+            setAgendaForDay( setLandingAgendaDay() );
         });
 
         $scope.tracksForTheDay = function(conf) {
-            setAgendaForDay( conf );
+            AgendaService.setVisitedAgenda( conf );
+            setAgendaForDay( setLandingAgendaDay() );
         };
     };
 
@@ -147,7 +166,7 @@
 
     // DI for each controller using $inject
     TalksCtrl.$inject = ['$scope', '$rootScope', '$stateParams', '$state', 'Talks'];
-    AgendaCtrl.$inject = ['$scope', 'Agenda'];
+    AgendaCtrl.$inject = ['$scope', 'Agenda', 'AgendaService'];
     AgendaDetailCtrl.$inject = ['$scope', '$stateParams', 'Talks', 'SpeakerDetail'];
     SpeakersCtrl.$inject = ['$scope', 'Speakers'];
 

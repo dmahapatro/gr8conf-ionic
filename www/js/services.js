@@ -50,6 +50,23 @@
         }
     };
 
+    var AgendaService = function () {
+        var visitedAgenda;
+
+        function setVisitedAgenda(_visited) {
+            visitedAgenda = _visited;
+        }
+
+        function getVisitedAgenda() {
+            return visitedAgenda;
+        }
+
+        return {
+            setVisitedAgenda: setVisitedAgenda,
+            getVisitedAgenda: getVisitedAgenda
+        }
+    };
+
     var injections = ['$resource', 'Api'];
 
     Talks.$inject = angular.copy(injections);
@@ -61,5 +78,6 @@
         .factory('Talks', Talks)
         .factory('Speakers', Speakers)
         .factory('Agenda', Agenda)
-        .factory('SpeakerDetail', SpeakerDetail);
+        .factory('SpeakerDetail', SpeakerDetail)
+        .factory('AgendaService', AgendaService);
 })();
